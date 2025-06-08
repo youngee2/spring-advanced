@@ -25,14 +25,25 @@ public class AuthService {
 
     @Transactional
     public SignupResponse signup(SignupRequest signupRequest) {
-
-        String encodedPassword = passwordEncoder.encode(signupRequest.getPassword());
-
-        UserRole userRole = UserRole.of(signupRequest.getUserRole());
-
+        //Early Retrun
         if (userRepository.existsByEmail(signupRequest.getEmail())) {
             throw new InvalidRequestException("이미 존재하는 이메일입니다.");
         }
+
+        /* Lv1. 코드 개선 퀴즈 - Early Return
+            1) signup()에 있는 if문의 코드 부분의 위치를 리팩토링
+            2) 해당 에러가 발생하는 상황일 때, passwordEncoder의 encode() 동작이 불필요하게
+            일어나지 않게 코드를 개선.
+
+           예외가 발생하지 않을 경우에만 signup() 이후 로직 수행
+
+            String encodedPassword = passwordEncoder.encode(signupRequest.getPassword());
+            UserRole userRole = UserRole.of(signupRequest.getUserRole());
+         */
+
+        String encodedPassword = passwordEncoder.encode(signupRequest.getPassword());
+        UserRole userRole = UserRole.of(signupRequest.getUserRole());
+
 
         User newUser = new User(
                 signupRequest.getEmail(),
