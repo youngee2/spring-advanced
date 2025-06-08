@@ -23,13 +23,13 @@ public class UserService {
         return new UserResponse(user.getId(), user.getEmail());
     }
 
+
+    /* Lv1. 코드 개선 퀴즈 - Validation
+                  1) changePassword() 중 코드 부분을 해당 API의 요청 DTO에서 처리할 수 있게 개선해주세요.
+                  2) org.springframework.boot:spring-boot-starter-validation 라이브러리를 활용해주세요!
+               */
     @Transactional
     public void changePassword(long userId, UserChangePasswordRequest userChangePasswordRequest) {
-        if (userChangePasswordRequest.getNewPassword().length() < 8 ||
-                !userChangePasswordRequest.getNewPassword().matches(".*\\d.*") ||
-                !userChangePasswordRequest.getNewPassword().matches(".*[A-Z].*")) {
-            throw new InvalidRequestException("새 비밀번호는 8자 이상이어야 하고, 숫자와 대문자를 포함해야 합니다.");
-        }
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new InvalidRequestException("User not found"));
