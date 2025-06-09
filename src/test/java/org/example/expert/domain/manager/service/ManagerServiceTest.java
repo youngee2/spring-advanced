@@ -60,6 +60,10 @@ class ManagerServiceTest {
         assertEquals("Todo not found", exception.getMessage());
     }
 
+    /* Lv3-2. 테스트코드 연습 -3
+            1) 예상대로 예외처리 하는지에 대한 케이스
+            2) todo의_user가_null인_경우_예외가_발생한다() 테스트가 성공할 수 있도록 서비스 로직을 수정해주세요.
+    * */
     @Test
     void todo의_user가_null인_경우_예외가_발생한다() {
         // given
